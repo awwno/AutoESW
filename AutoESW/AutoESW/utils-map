@@ -1,0 +1,23 @@
+last_atom=$(awk 'NR==6{print $NF}' POSCAR)
+num_elements=$(awk 'NR==6{print NF}' POSCAR)
+declare -A charge2name
+if [ $last_atom == "Na" ] && [ $num_elements -gt 1 ];then
+        charge2name[2]="cat"
+        charge2name[1]="neu"
+        charge2name[0]="an"
+else
+        charge2name[1]="cat"
+        charge2name[0]="neu"
+        charge2name[-1]="an"
+fi
+
+declare -A name2charge
+if [ $last_atom == "Na" ] && [ $num_elements -gt 1 ];then
+        name2charge["cat"]=2
+        name2charge["neu"]=1
+        name2charge["an"]=0
+else
+	name2charge["cat"]=1
+        name2charge["neu"]=0
+        name2charge["an"]=-1
+fi
